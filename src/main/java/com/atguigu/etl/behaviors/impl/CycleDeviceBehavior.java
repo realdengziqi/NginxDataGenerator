@@ -1,6 +1,5 @@
 package com.atguigu.etl.behaviors.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Tuple;
 import com.atguigu.etl.behaviors.BehaviorTool;
 import com.atguigu.etl.behaviors.RequestBehavior;
@@ -11,35 +10,32 @@ import java.util.List;
 
 /**
  * @author: realdengziqi
- * @date: 2023-02-15 7:41
- * @description: 同一广告，同一设备上曝光、点击过快（5分钟超过100次）
+ * @date: 2023-02-16 20:48
+ * @description:
  */
-public class FastRequestAdFixedDeviceFixedBehavior extends RequestBehavior {
+public class CycleDeviceBehavior extends RequestBehavior {
 
-    public static Logger logger = LoggerFactory.getLogger(FastRequestAdFixedDeviceFixedBehavior.class);
-
+    private static Logger logger = LoggerFactory.getLogger(CycleDeviceBehavior.class);
 
     @Override
     public Long run() {
-        List<Tuple> times = BehaviorTool.popFastTimesSeries();
+        List<Tuple> times = BehaviorTool.popCycleTimeSeries();
 
-        setUserIp(BehaviorTool.popOneIpv4());
+
         setServerIp(BehaviorTool.popOneHostIp());
-
-        doSetAdIdAndPlatformInfo();
-
         setClickOrImpression(BehaviorTool.popOneClickOrImpressionSeries());
-
-        Long num = 0L;
         setDeviceId(BehaviorTool.popOneDeviceId());
         setOsType(BehaviorTool.popOneOSType());
+        doSetAdIdAndPlatformInfo();
+
 
         for (Tuple time : times) {
+            setUserIp(BehaviorTool.popOneIpv4());
             setServerTime(time.get(0));
             setEventTime(time.get(1));
             logger.info(output());
-            num++;
+            setRowNum(getRowNum() + 1);
         }
-        return num;
+        return getRowNum();
     }
 }

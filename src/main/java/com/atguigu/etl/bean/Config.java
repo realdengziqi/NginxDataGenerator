@@ -33,6 +33,26 @@ public class Config {
 
     private Long endTimeTs;
 
+    private Integer baseDataNum;
+
+    private Integer threadNum;
+
+    private String logLevel;
+
+    private Double cycleBrowser;
+
+    private Double cycleDevice;
+
+    private Double fastFixedIpBrowser;
+
+    private Double fastFixedIdDevice;
+
+    private Double normalBrowser;
+
+    private Double normalDevice;
+
+    private Double botBrowser;
+
     public String getFileName() {
         return fileName;
     }
@@ -107,6 +127,22 @@ public class Config {
         endTimeTs = LocalDateTimeUtil.parse(endTime,"yyyy-MM-dd HH:mm:ss").toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
     }
 
+    public Integer getBaseDataNum() {
+        return baseDataNum;
+    }
+
+    public void setBaseDataNum(Integer baseDataNum) {
+        this.baseDataNum = baseDataNum;
+    }
+
+    public Integer getThreadNum() {
+        return threadNum;
+    }
+
+    public void setThreadNum(Integer threadNum) {
+        this.threadNum = threadNum;
+    }
+
     public Long getStartTimeTs() {
         return startTimeTs;
     }
@@ -121,5 +157,69 @@ public class Config {
 
     public void setEndTimeTs(Long endTimeTs) {
         this.endTimeTs = endTimeTs;
+    }
+
+    public String getLogLevel() {
+        return logLevel;
+    }
+
+    public void setLogLevel(String logLevel) {
+        this.logLevel = logLevel;
+    }
+
+    public Double getCycleBrowser() {
+        return cycleBrowser;
+    }
+
+    public void setCycleBrowser(Double cycleBrowser) {
+        this.cycleBrowser = cycleBrowser;
+    }
+
+    public Double getCycleDevice() {
+        return cycleDevice;
+    }
+
+    public void setCycleDevice(Double cycleDevice) {
+        this.cycleDevice = cycleDevice;
+    }
+
+    public Double getFastFixedIpBrowser() {
+        return fastFixedIpBrowser;
+    }
+
+    public void setFastFixedIpBrowser(Double fastFixedIpBrowser) {
+        this.fastFixedIpBrowser = fastFixedIpBrowser;
+    }
+
+    public Double getFastFixedIdDevice() {
+        return fastFixedIdDevice;
+    }
+
+    public void setFastFixedIdDevice(Double fastFixedIdDevice) {
+        this.fastFixedIdDevice = fastFixedIdDevice;
+    }
+
+    public Double getNormalBrowser() {
+        return normalBrowser;
+    }
+
+    public void setNormalBrowser(Double normalBrowser) {
+        this.normalBrowser = normalBrowser;
+    }
+
+    public Double getNormalDevice() {
+        return normalDevice;
+    }
+
+    public void setNormalDevice(Double normalDevice) {
+        this.normalDevice = normalDevice;
+    }
+
+    public Double getBotBrowser() {
+        return botBrowser;
+    }
+
+    public void setBotBrowser(Double botBrowser) {
+        this.botBrowser = botBrowser;
     }
 }

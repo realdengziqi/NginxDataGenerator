@@ -1,7 +1,10 @@
 package com.atguigu.etl.loader;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import cn.hutool.setting.Setting;
+import cn.hutool.setting.SettingLoader;
+import cn.hutool.setting.SettingUtil;
 import com.atguigu.etl.bean.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,10 +53,59 @@ public class ConfigLoader {
         config.setFileName(setting.getStr("fileName"));
         logger.info("配置 fileName: " + config.getFileName());
 
+        config.setBaseDataNum(setting.getInt("baseDataNum"));
+        logger.info("配置 baseDataNum: " + config.getBaseDataNum());
+
+        config.setThreadNum(setting.getInt("threadNum"));
+        logger.info("配置 threadNum: " + config.getThreadNum());
+
         config.setStartTime(setting.getStr("startTime"));
         logger.info("配置 startTime: " + config.getStartTime()+" 解析为时间戳: " + config.getStartTimeTs());
 
         config.setEndTime(setting.getStr("endTime"));
         logger.info("配置 endTime: " + config.getEndTime() + " 解析为时间戳: " +  config.getEndTimeTs());
+
+        config.setCycleBrowser(setting.getDouble("cycleBrowser",0d));
+        logger.info("配置 cycleBrowser: " + config.getCycleBrowser());
+
+        config.setCycleDevice(setting.getDouble("cycleDevice",0d));
+        logger.info("配置 cycleDevice: " + config.getCycleDevice());
+
+        config.setFastFixedIpBrowser(setting.getDouble("fastFixedIpBrowser",0d));
+        logger.info("配置 fastFixedIpBrowser: " + config.getFastFixedIpBrowser());
+
+        config.setFastFixedIdDevice(setting.getDouble("fastFixedIdDevice",0d));
+        logger.info("配置 fastFixedIdDevice: " + config.getFastFixedIdDevice());
+
+        config.setNormalBrowser(setting.getDouble("normalBrowser",0d));
+        logger.info("配置 normalBrowser: " + config.getNormalBrowser());
+
+        config.setNormalDevice(setting.getDouble("normalDevice",0d));
+        logger.info("配置 normalDevice: " + config.getNormalDevice());
+
+        config.setBotBrowser(setting.getDouble("botBrowser",0d));
+        logger.info("配置 borBrowser: " + config.getBotBrowser());
+
+        config.setLogLevel(setting.getStr("logLevel"));
+        logger.info("配置 logLevel: " + config.getLogLevel());
+
+        ch.qos.logback.classic.Logger logback = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger("ROOT");
+        switch (config.getLogLevel()) {
+            case "DEBUG":
+                logback.setLevel(Level.DEBUG);
+                break;
+            case "INFO":
+                logback.setLevel(Level.INFO);
+                break;
+            case "WARN":
+                logback.setLevel(Level.WARN);
+            case "ERROR":
+                logback.setLevel(Level.DEBUG);
+                break;
+            default:
+                logback.setLevel(Level.INFO);
+                break;
+        }
+
     }
 }

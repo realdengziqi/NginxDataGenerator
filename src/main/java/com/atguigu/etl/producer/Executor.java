@@ -1,11 +1,14 @@
 package com.atguigu.etl.producer;
 
 import cn.hutool.core.lang.WeightRandom;
+import com.atguigu.etl.bean.Config;
 import com.atguigu.etl.behaviors.RequestBehavior;
-import com.atguigu.etl.behaviors.impl.NormalMobilBehavior;
-import com.atguigu.etl.behaviors.impl.NormalBrowserBehavior;
+import com.atguigu.etl.behaviors.impl.*;
+import com.atguigu.etl.loader.ConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -17,18 +20,28 @@ public class Executor extends Thread {
 
     private final WeightRandom<Class<?>> weightRandom;
 
-    private final Long num ;
+    private final Integer num ;
 
     public static Logger logger = LoggerFactory.getLogger(Executor.class);
 
     public Long rowNum = 0L;
 
-    public Executor(Long num) {
+    public CountDownLatch latch;
+
+    public Executor(CountDownLatch latch, Integer num) {
+        Config config = ConfigLoader.getConfig();
         weightRandom = WeightRandom.create();
-        weightRandom.add(NormalBrowserBehavior.class,0.2);
-        weightRandom.add(NormalMobilBehavior.class,0.7);
+        weightRandom.add(NormalBrowserBehavior.class,config.getNormalBrowser());
+        weightRandom.add(NormalMobilBehavior.class,config.getNormalDevice());
+        weightRandom.add(FastRequestAdFixedIpFixedBehavior.class,config.getFastFixedIpBrowser());
+        weightRandom.add(FastRequestAdFixedDeviceFixedBehavior.class,config.getFastFixedIdDevice());
+        weightRandom.add(NormalBotBehavior.class,config.getBotBrowser());
+        weightRandom.add(CycleBrowserBehavior.class,config.getCycleBrowser());
+        weightRandom.add(CycleDeviceBehavior.class,config.getCycleDevice());
         this.num =num;
+        this.latch = latch;
     }
+
 
     @Override
     public void run() {
@@ -46,5 +59,6 @@ public class Executor extends Thread {
             rowNum = rowNum + requestBehavior.run();
         }
         logger.info("本线程即将退出，已生成"+rowNum+"条数据");
+        latch.countDown();
     }
 }

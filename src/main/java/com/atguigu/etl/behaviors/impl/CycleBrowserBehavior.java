@@ -8,37 +8,33 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-
 /**
  * @author: realdengziqi
- * @date: 2023-02-15 7:44
- * @description: 同一广告，同一ip曝光、点击过快（5分钟超过100次）
+ * @date: 2023-02-16 19:12
+ * @description:
  */
-public class FastRequestAdFixedIpFixedBehavior extends RequestBehavior {
+public class CycleBrowserBehavior extends RequestBehavior {
 
-    public static Logger logger = LoggerFactory.getLogger(FastRequestAdFixedIpFixedBehavior.class);
+    public static Logger logger = LoggerFactory.getLogger(CycleBrowserBehavior.class);
 
     @Override
     public Long run() {
-        List<Tuple> times = BehaviorTool.popFastTimesSeries();
+        List<Tuple> times = BehaviorTool.popCycleTimeSeries();
 
-
+        setUserIp(BehaviorTool.popOneIpv4());
         setServerIp(BehaviorTool.popOneHostIp());
+        setClickOrImpression(BehaviorTool.popOneClickOrImpressionSeries());
 
         doSetAdIdAndPlatformInfo();
 
-        setClickOrImpression(BehaviorTool.popOneClickOrImpressionSeries());
-
-        setUserIp(BehaviorTool.popOneIpv4());
-        Long num = 0L;
 
         for (Tuple time : times) {
             setUa(BehaviorTool.popOneNormalUa());
             setServerTime(time.get(0));
             setEventTime(time.get(1));
             logger.info(output());
-            num++;
+            setRowNum(getRowNum() + 1);
         }
-        return num;
+        return getRowNum();
     }
 }

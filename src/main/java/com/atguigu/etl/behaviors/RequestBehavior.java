@@ -145,7 +145,7 @@ public abstract class RequestBehavior {
                 "\"\001\"",
                 serverTime,
                 method,
-                URLEncodeUtil.encodeQuery("/ad/"+platformName+"/"+clickOrImpression+"?id="+adId+"&t="+ eventTime +"$ip="+userIp+"&ua="+ua+"&device_id="+deviceId+"&OS_TYPE="+osType).replace("null",""),
+                URLEncodeUtil.encodeQuery("/ad/"+platformName+"/"+clickOrImpression+"?id="+adId+"&t="+ eventTime +"&ip="+userIp+"&ua="+ua+"&device_id="+deviceId+"&os_type="+osType).replace("null",""),
                 status,
                 serverIp
                 ) + '"';

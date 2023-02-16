@@ -1,5 +1,8 @@
 package com.atguigu.etl;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.date.TimeInterval;
 import com.atguigu.etl.loader.ConfigLoader;
 import com.atguigu.etl.loader.DBLoader;
 import com.atguigu.etl.loader.ResourceLoader;
@@ -10,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author: realdengziqi
@@ -25,7 +31,7 @@ public class Main {
 
 
     public static void main(String[] args) throws InterruptedException, SQLException {
-
+        long startTime = System.currentTimeMillis();
         String currentPath = new File("").getAbsolutePath();
         String settingPath = null;
         if(args.length==0){
@@ -38,8 +44,13 @@ public class Main {
 
         // 1.执行阶段
 
-        execute(16);
+        execute(ConfigLoader.getConfig().getThreadNum());
+        long endTime = System.currentTimeMillis();
+        long duration = endTime- startTime;
 
+
+
+        logger.info("主线程退出，程序结束！共耗时"+duration+"ms");
 
     }
 
@@ -64,14 +75,27 @@ public class Main {
         ResourceLoader resourceLoader = new ResourceLoader();
         resourceLoader.loadNormalUserAgents();
         resourceLoader.loadOtherUserAgents();
-        // 4.
+
     }
 
 
-    public static void execute(int threadNum) {
+    public static void execute(int threadNum) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(threadNum);
+        List<Executor> executors = new LinkedList<>();
+
+
         for (int i = 0; i < threadNum; i++) {
-            new Executor(10000L).start();
+            Executor executor = new Executor(latch, ConfigLoader.getConfig().getBaseDataNum());
+            executors.add(executor);
+            executor.start();
         }
+
+        latch.await();
+        Long allRowNum = 0L;
+        for (Executor executor : executors) {
+            allRowNum = allRowNum + executor.rowNum;
+        }
+        logger.info("所有线程结束，共计生成"+allRowNum+"条数据");
     }
 
 
