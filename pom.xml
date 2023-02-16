@@ -35,4 +35,39 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <!--指定jar包的入口类，UDF用不到主类，因此不用指定-->
+                    <archive>
+                        <manifest>
+                            <mainClass>com.atguigu.etl.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <!--将依赖编译到jar包中-->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <!--配置执行器-->
+                    <execution>
+                        <id>make-assembly</id>
+                        <!--绑定到package执行周期上-->
+                        <phase>package</phase>
+                        <goals>
+                            <!--只运行一次-->
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
 </project>
