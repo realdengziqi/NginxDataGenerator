@@ -27,7 +27,7 @@ public class CycleDeviceBehavior extends RequestBehavior {
         setDeviceId(BehaviorTool.popOneDeviceId());
         setOsType(BehaviorTool.popOneOSType());
         doSetAdIdAndPlatformInfo();
-
+        setUa(BehaviorTool.popOneNormalUa());
 
         for (Tuple time : times) {
             setUserIp(BehaviorTool.popOneIpv4());

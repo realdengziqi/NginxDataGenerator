@@ -26,7 +26,7 @@ public class FastRequestAdFixedDeviceFixedBehavior extends RequestBehavior {
         setServerIp(BehaviorTool.popOneHostIp());
 
         doSetAdIdAndPlatformInfo();
-
+        setUa(BehaviorTool.popOneNormalUa());
         setClickOrImpression(BehaviorTool.popOneClickOrImpressionSeries());
 
         Long num = 0L;

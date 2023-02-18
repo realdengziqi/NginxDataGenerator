@@ -26,7 +26,7 @@ public class NormalMobilBehavior extends RequestBehavior {
         setUserIp(BehaviorTool.popOneIpv4());
         setServerIp(BehaviorTool.popOneHostIp());
         setOsType(BehaviorTool.popOneOSType());
-
+        setUa(BehaviorTool.popOneNormalUa());
         doSetAdIdAndPlatformInfo();
 
 
