@@ -28,11 +28,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.29</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.realdengziqi</groupId>
-            <artifactId>etl-gen-java</artifactId>
-            <version>1.1.0</version>
-        </dependency>
     </dependencies>
 
     <build>

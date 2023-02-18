@@ -7,6 +7,7 @@ import cn.hutool.core.lang.WeightRandom;
 import cn.hutool.core.util.RandomUtil;
 import com.atguigu.etl.bean.AdsPlatformInfoBridge;
 import com.atguigu.etl.bean.Config;
+import com.atguigu.etl.bean.IpGen;
 import com.atguigu.etl.entity.Ads;
 import com.atguigu.etl.entity.AdsPlatform;
 import com.atguigu.etl.entity.PlatformInfo;
@@ -14,8 +15,7 @@ import com.atguigu.etl.entity.ServerHost;
 import com.atguigu.etl.loader.ConfigLoader;
 import com.atguigu.etl.loader.ResourceLoader;
 import com.mysql.cj.util.TimeUtil;
-import io.github.realdengziqi.etl_gen.IpGen;
-import org.apache.commons.lang3.RandomUtils;
+
 
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;

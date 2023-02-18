@@ -4,7 +4,6 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +49,7 @@ public class ResourceLoader {
             JSONObject jsonObject = agentArray.getJSONObject(i);
             JSONArray instances = jsonObject.getJSONArray("instances");
             String url = jsonObject.getStr("url");
-            if (StringUtils.isEmpty(url)) {
+            if (url!=null && url.length() != 0) {
                 for (int j = 0; j < instances.size(); j++) {
                     String agent = instances.getStr(j);
                     if(agent.contains("bot")){
