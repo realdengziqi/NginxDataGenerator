@@ -191,9 +191,17 @@ public class BehaviorTool {
             }
             if (serverTime >= ConfigLoader.getConfig().getEndTimeTs()){
                 serverTime = ConfigLoader.getConfig().getEndTimeTs()-1L;
-                if(currentEventTime < serverTime){
+                if(currentEventTime > serverTime){
                     currentEventTime = serverTime;
                 }
+
+                timeSeries.add(
+                        new Tuple(
+                                LocalDateTimeUtil.of(serverTime).toString(),
+                                Long.toString(currentEventTime)
+                        )
+                );
+                break;
             }
             currentEventTime = currentEventTime + step;
 
