@@ -41,7 +41,7 @@ fileName = niubi
 ##############################
 
 # 数据基数[整数]（基数越大，单线程的数据量越大，但只能粗略控制）
-baseDataNum = 300
+baseDataNum = 100
 
 # 线程数[整数]（运用CPU的多核能力，同时数据量会翻倍）
 threadNum = 16
@@ -83,3 +83,10 @@ botBrowser = 0.03
 
 # DEBUG,INFO,WARN,ERROR
 logLevel = INFO
+
+##############################
+# 为生成数据的最后增加一个字段，表明数据来自哪个类，false不加，true会加
+##############################
+
+# true or false
+whereDataFrom = false

@@ -22,7 +22,6 @@ public class FastRequestAdFixedDeviceFixedBehavior extends RequestBehavior {
     @Override
     public Long run() {
         List<Tuple> times = BehaviorTool.popFastTimesSeries();
-
         setUserIp(BehaviorTool.popOneIpv4());
         setServerIp(BehaviorTool.popOneHostIp());
 

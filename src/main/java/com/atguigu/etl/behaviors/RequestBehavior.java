@@ -3,6 +3,7 @@ package com.atguigu.etl.behaviors;
 
 import cn.hutool.core.net.URLEncodeUtil;
 import com.atguigu.etl.bean.AdsPlatformInfoBridge;
+import com.atguigu.etl.loader.ConfigLoader;
 
 /**
  * @author: realdengziqi
@@ -141,7 +142,7 @@ public abstract class RequestBehavior {
     }
 
     public String output() {
-        return  '"'+ String.join(
+        String out =  '"'+ String.join(
                 "\"\001\"",
                 serverTime,
                 method,
@@ -149,5 +150,9 @@ public abstract class RequestBehavior {
                 status,
                 serverIp
                 ) + '"';
+        if (ConfigLoader.getConfig().getWhereDataFrom()){
+            return out+",\"" +getClass().getName()+"\"";
+        }
+        return out;
     }
 }

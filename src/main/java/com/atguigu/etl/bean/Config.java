@@ -53,6 +53,8 @@ public class Config {
 
     private Double botBrowser;
 
+    private Boolean whereDataFrom;
+
     public String getFileName() {
         return fileName;
     }
@@ -221,5 +223,13 @@ public class Config {
 
     public void setBotBrowser(Double botBrowser) {
         this.botBrowser = botBrowser;
+    }
+
+    public Boolean getWhereDataFrom() {
+        return whereDataFrom;
+    }
+
+    public void setWhereDataFrom(Boolean whereDataFrom) {
+        this.whereDataFrom = whereDataFrom;
     }
 }

@@ -89,6 +89,9 @@ public class ConfigLoader {
         config.setLogLevel(setting.getStr("logLevel"));
         logger.info("配置 logLevel: " + config.getLogLevel());
 
+        config.setWhereDataFrom(setting.getBool("whereDataFrom"));
+
+
         ch.qos.logback.classic.Logger logback = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger("ROOT");
         switch (config.getLogLevel()) {
             case "DEBUG":
