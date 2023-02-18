@@ -175,6 +175,8 @@ public class BehaviorTool {
         long currentEventTime = initTs;
         // 最大访问次数
         long times = RandomUtil.randomLong(200L, 500L);
+
+
         for (int i = 0; i < times; i++) {
             long serverTime = currentEventTime + RandomUtil.randomLong(50, 3000);
             if (serverTime > ConfigLoader.getConfig().getEndTimeTs() ){
@@ -186,8 +188,9 @@ public class BehaviorTool {
                                     Long.toString(currentEventTime)
                             )
                     );
+                    break;
                 }
-                break;
+
             }
             if (serverTime >= ConfigLoader.getConfig().getEndTimeTs()){
                 serverTime = ConfigLoader.getConfig().getEndTimeTs()-1L;
@@ -203,7 +206,7 @@ public class BehaviorTool {
                 );
                 break;
             }
-            currentEventTime = currentEventTime + step;
+
 
             timeSeries.add(
                     new Tuple(
@@ -211,6 +214,7 @@ public class BehaviorTool {
                             Long.toString(currentEventTime)
                     )
             );
+            currentEventTime = currentEventTime + step;
         }
         return  timeSeries;
     }
